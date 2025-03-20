@@ -8,9 +8,6 @@ class Solution {
             if(s1.containsKey(s.charAt(i)))
                 j=Math.max(j,s1.get(s.charAt(i))+1);
             s1.put(s.charAt(i),i);
-            System.out.println(s.charAt(i));
-            System.out.println(s1.get(s.charAt(i)));
-            System.out.println(j);
             result = Math.max(result, i-j+1);
         }
         return result;
