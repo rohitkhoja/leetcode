@@ -7,74 +7,44 @@ class Solution {
             int n = inputString.getOrDefault(c,0);
             inputString.put(c,n+1);
         }
+        List<Pair<Character, Integer>> charList = new ArrayList<>();
+        for(int i=0;i<s.length();i++){
+            if(inputString.containsKey(s.charAt(i)))
+                charList.add(new Pair<>(s.charAt(i),i));
+        }
         String result = "";
         Map<Character, Integer> currentChar = new HashMap<>();
-        int startIndex = 0;
-        int currentIndex = 0;
+        int j = 0;
         int numberOfElements = 0;
-        for(char c : s.toCharArray()){
-            if(!inputString.containsKey(c)){
-                if(currentIndex == startIndex) {
-                    startIndex++;
-                }
-            }
-            
-            else {
-                int r = inputString.get(c);
-                int current = currentChar.getOrDefault(c,0);
-                
-                if(current<r){ 
-                    numberOfElements++;
-                }
-                
-                currentChar.put(c,current+1);
-                
 
-                // else {
-                //     char start = s.charAt(startIndex);
-                //     startIndex++;
-                //     while(!inputString.containsKey(s.charAt(startIndex)))
-                //     startIndex++;
-                //     System.out.println("update start index " + startIndex);
-                //     System.out.println("update current index " + currentIndex);
-                //     if(start!=c) {
-                //         currentChar.put(c,current+1);
-                //         int startCount = currentChar.get(start);
-                //         int rstartCount = inputString.get(start);
-                //         currentChar.put(start,startCount-1);
-                //         if(rstartCount > startCount-1)
-                //         numberOfElements--;
-                //     }
-                    
-                // }
-                 
-            }     
-            currentIndex++;
-            // System.out.println("update current index " + currentIndex+ " elements here "+numberOfElements);
-            // System.out.println("update start index " + startIndex+ " length here "+ minLength);
-            
-            while(numberOfElements == tLength && startIndex < currentIndex){
+        for(int i=0;i<charList.size();i++){
+            char c = charList.get(i).getKey();
+            int r = inputString.get(c);
+            int current = currentChar.getOrDefault(c,0);
+            if(current<r){ 
+                    numberOfElements++;
+            }
+            currentChar.put(c,current+1);
+            while(numberOfElements == tLength ){
+                    int startIndex = charList.get(j).getValue();
+                    char startChar = charList.get(j).getKey();
+                    int currentIndex = charList.get(i).getValue();
+                    System.out.println("currentIndex"+currentIndex);
+                    System.out.println("startIndex"+startIndex);
                     if(numberOfElements == tLength && minLength > (currentIndex-startIndex)) {
-                        System.out.println(currentIndex+ "and " + startIndex);
                         minLength = currentIndex-startIndex;
-                        result = s.substring(startIndex,currentIndex);
+                        result = s.substring(startIndex,currentIndex+1);
                     }
-                    char start = s.charAt(startIndex);
-                    int startCount = currentChar.get(start);
-                    int rstartCount = inputString.get(start);
-                    startIndex++;
-                    while(startIndex < currentIndex && !inputString.containsKey(s.charAt(startIndex)))
-                    startIndex++;
-                    currentChar.put(start,startCount-1);
+                    
+                    int startCount = currentChar.get(startChar);
+                    int rstartCount = inputString.get(startChar);
+                    j++;
                     if(rstartCount > startCount-1)
                         numberOfElements--;
-
+                    currentChar.put(startChar,startCount-1);
             }
-               
-            
 
         }
-
         return result;
     }
 }
