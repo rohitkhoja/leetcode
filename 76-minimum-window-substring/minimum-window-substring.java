@@ -25,7 +25,7 @@ class Solution {
                     numberOfElements++;
             }
             currentChar.put(c,current+1);
-            while(numberOfElements == tLength ){
+            while(numberOfElements == tLength && j<=i ){
                     int startIndex = charList.get(j).getValue();
                     char startChar = charList.get(j).getKey();
                     int currentIndex = charList.get(i).getValue();
