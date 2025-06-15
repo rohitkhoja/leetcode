@@ -2,6 +2,8 @@ class Solution {
     public String minWindow(String s, String t) {
         Map<Character, Integer> inputString = new HashMap<>();
         int minLength = Integer.MAX_VALUE;
+        int sti = 0;
+        int str= Integer.MAX_VALUE;
         int tLength = t.length();
         for(char c : t.toCharArray()){
             int n = inputString.getOrDefault(c,0);
@@ -25,7 +27,7 @@ class Solution {
                     numberOfElements++;
             }
             currentChar.put(c,current+1);
-            while(numberOfElements == tLength && j<=i ){
+            while(numberOfElements == tLength  ){
                     int startIndex = charList.get(j).getValue();
                     char startChar = charList.get(j).getKey();
                     int currentIndex = charList.get(i).getValue();
@@ -33,7 +35,9 @@ class Solution {
                     System.out.println("startIndex"+startIndex);
                     if(numberOfElements == tLength && minLength > (currentIndex-startIndex)) {
                         minLength = currentIndex-startIndex;
-                        result = s.substring(startIndex,currentIndex+1);
+                        sti = startIndex;
+                        str = currentIndex;
+                        //result = s.substring(startIndex,currentIndex+1);
                     }
                     
                     int startCount = currentChar.get(startChar);
@@ -45,7 +49,9 @@ class Solution {
             }
 
         }
-        return result;
+        if(str!=Integer.MAX_VALUE)
+        return s.substring(sti,str+1);
+        else return result;
     }
 }
 
