@@ -23,7 +23,7 @@ class Solution {
             pair = moveNorth(pair.getKey(), pair.getValue(),
                                             col, track, result, matrix);
             if(result.size()==row*col)   return result;                                 
-            System.out.println(result);
+            // System.out.println(result);
             i = pair.getKey();
             j =  pair.getValue();
        
@@ -45,7 +45,7 @@ class Solution {
     public Pair<Integer, Integer> moveSouth(int i, int j, int col,
         Set<String> track, List<Integer> result, int[][] matrix){
         while(j<col && !track.contains(""+j+i)){
-            System.out.println(i+" "+j+ " "+col);
+            // System.out.println(i+" "+j+ " "+col);
             result.add(matrix[j][i]);
             track.add(""+j+i);
             j++;
@@ -56,7 +56,7 @@ class Solution {
     }
     public Pair<Integer, Integer> moveWest(int i, int j, int row,
         Set<String> track, List<Integer> result, int[][] matrix){
-        System.out.println(i+" "+j+ " ");
+        //System.out.println(i+" "+j+ " ");
         while(i>=0 && !track.contains(""+j+i)){
             
             result.add(matrix[j][i]);
@@ -70,8 +70,8 @@ class Solution {
     public Pair<Integer, Integer> moveNorth(int i, int j, int col,
         Set<String> track, List<Integer> result, int[][] matrix){
         while(j>=0 && !track.contains(""+j+i)){
-            System.out.println(track);
-            System.out.println(i+" "+j);
+            // System.out.println(track);
+            // System.out.println(i+" "+j);
             result.add(matrix[j][i]);
             track.add(""+j+i);
             j--;
