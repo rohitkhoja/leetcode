@@ -19,17 +19,3 @@ class Solution {
         }
     }
 }
-
-
-
-// (i,j)      (row,j)      (row,col)      (i,col)
-// i,j+1      row-1,j             col-1    i+1
-// i,j+2
-// i,j+3
-// untill reach row
-
-//first loop done i++, j++, row--, col-- start to that function
-
-// i,j store , mov row,j --> i,j, mov row,col --> row,j,  mov i,col --> row,col,  mov store --> i,col
-// i1,j store, mov row-1,j --> i1,j, mov row,col-1-->  , mov i+1,col            i+1,j --> 
-// 
