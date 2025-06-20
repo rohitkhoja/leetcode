@@ -1,28 +1,24 @@
 class Solution {
     public void rotate(int[][] matrix) {
         int row = matrix.length-1;
-        int col = row;
         int i=0;
-        int j=0;
         while(i<row){
-            layerRotation(i,j,row,col,matrix);
+            layerRotation(i,row,matrix);
 
             i++;
-            j++;
             row--;
-            col--;
-            System.out.println(i+" "+j+" "+" "+row+" "+col);
+            
             System.out.println(matrix);
         }
     }    
         
-    public void layerRotation(int i, int j, int row, int col, int[][] matrix){
+    public void layerRotation(int i, int row, int[][] matrix){    
         for(int n=0;n+i<row;n++){
-            int temp = matrix[i][j+n];
-            matrix[i][j+n] = matrix[row-n][j];
-            matrix[row-n][j] = matrix[row][col-n];
-            matrix[row][col-n] = matrix[i+n][col];
-            matrix[i+n][col] = temp;
+            int temp = matrix[i][i+n];
+            matrix[i][i+n] = matrix[row-n][i];
+            matrix[row-n][i] = matrix[row][row-n];
+            matrix[row][row-n] = matrix[i+n][row];
+            matrix[i+n][row] = temp;
         }
     }
 }
