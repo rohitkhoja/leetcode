@@ -4,11 +4,8 @@ class Solution {
         int i=0;
         while(i<row){
             layerRotation(i,row,matrix);
-
             i++;
-            row--;
-            
-            System.out.println(matrix);
+            row--;            
         }
     }    
         
