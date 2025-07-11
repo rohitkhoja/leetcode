@@ -3,14 +3,13 @@ class Solution {
     Set<Integer> set = new HashSet<>();
     while(n!=1){
         int n1 = calcNumber(n);
-        if(set.contains(n1)) return false;
+        if(set.contains(n1) || n1==4) return false;
         set.add(n1);
         n=n1;
     }
     return true;
     }
     public int calcNumber(int n){
-        
         int result = 0;
         while(n>0){
             int n1 = n%10;
