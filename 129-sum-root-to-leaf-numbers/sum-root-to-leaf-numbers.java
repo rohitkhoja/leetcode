@@ -15,34 +15,22 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        List<String> sList = pathExplore(root);
-        int sum = 0;
-        for(String s: sList){
-            sum += Integer.valueOf(s);
-        }
-        return sum;
-        
+        int sum=0;
+        int[] totalSum = new int[1];
+        totalSum[0] = 0;
+        sumOfPath(root, sum, totalSum);
+        return totalSum[0];
         
     }
-    
-    public List<String> pathExplore(TreeNode root){
-        if(root==null) return new ArrayList<>();
-        List<String> nodePathList = new ArrayList<>();
-        if(root.left!=null){
-            List<String> sList = pathExplore(root.left);
-            for(String s: sList){
-                nodePathList.add(Integer.toString(root.val)+s);
+    public void sumOfPath(TreeNode root, int sum, int[] totalSum){
+        if(root!=null){
+            sum = sum*10 + root.val;
+            if(root.left==null && root.right==null){
+                totalSum[0] += sum;
             }
+            sumOfPath(root.left, sum, totalSum);
+            sumOfPath(root.right, sum, totalSum);
         }
-        if(root.right!=null){
-            List<String> sList = pathExplore(root.right);
-            for(String s: sList){
-                nodePathList.add(Integer.toString(root.val)+s);
-            }
-        }
-        if(root.left==null && root.right==null){
-            nodePathList.add(Integer.toString(root.val));
-        }
-        return nodePathList;
-     }
+        
+    }
 }
