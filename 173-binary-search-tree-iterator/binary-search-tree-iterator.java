@@ -19,10 +19,7 @@ class BSTIterator {
 
     public BSTIterator(TreeNode root) {
         curr = inorderTransform(root);
-        // while(root.right!=null){
-        //     System.out.println(root.val);
-        //     root = root.right;
-        // }
+        
     }
     
     public int next() {
