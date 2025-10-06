@@ -33,8 +33,7 @@ class Solution {
         }
         if(h==height) return nodes+ (int) Math.pow(2,h);
         h = height;
-        System.out.println(h);
-        System.out.println(nodes);
+        
         while(root.right!=null){
             int h1 = calcHeight(root.left,true);
             int h2 = calcHeight(root.left,false);
@@ -45,8 +44,7 @@ class Solution {
             else{
                 h--;
                 nodes  = nodes + (int) Math.pow(2,h);
-                System.out.println(h);
-                System.out.println(nodes);
+                
                 h1 = calcHeight(root.right,true);
                 h2 = calcHeight(root.right,false);
                 if(h1==h2) 
