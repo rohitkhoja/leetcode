@@ -20,8 +20,7 @@ class Solution {
                             int i1 = curr[0]+x[k];
                             int j1 = curr[1]+y[k];
                             if(i1>=0 && i1<n && j1>=0 && j1<m && grid[i1][j1]=='1'){
-                                System.out.println(i);
-                                System.out.println(j);
+                                
                                 grid[i1][j1]='0';
                                 q.offer(new int[]{i1,j1});
                             }
