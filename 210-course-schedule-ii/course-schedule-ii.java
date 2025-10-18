@@ -4,8 +4,10 @@ class Solution {
     Set<Integer> visited;
     Set<Integer> processing;
     public boolean traverse(int node, int[] result){
+        if(processing.contains(node)) return false;
+        
         if(!visited.contains(node)){
-            if(processing.contains(node)) return false;
+            
             processing.add(node);
             if(map.containsKey(node)) {
                 for(int n: map.get(node)){
