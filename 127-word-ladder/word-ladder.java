@@ -11,12 +11,13 @@ class Solution {
         return false;
     }
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if(!wordList.contains(endWord)) return 0;
         Set<String> set = new HashSet<>();
 
         for(String s: wordList){
             set.add(s);
         }
-        if(!set.contains(endWord)) return 0;
+      
 
         set.add(beginWord);
         Map<String, Set<String>> map = new HashMap<>();
