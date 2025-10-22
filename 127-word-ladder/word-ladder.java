@@ -18,22 +18,21 @@ class Solution {
             set.add(s);
         }
       
-
-        set.add(beginWord);
+        int len = beginWord.length();
+        //set.add(beginWord);
         Map<String, Set<String>> map = new HashMap<>();
 
         for(String s: set){
-            Set<String> sw = new HashSet<>();
-            for(String s1: set){
-                if(isoneDifference(s,s1))
-                    sw.add(s1);
+            for(int i=0;i<len;i++){
+                String pat = s.substring(0,i)+'*'+s.substring(i+1);
+                map.computeIfAbsent(pat,k -> new HashSet<>()).add(s);
             }
-            map.put(s,sw);
         }
+        
 
         Deque<String> q = new ArrayDeque<>();
         q.offer(beginWord);
-        set.remove(beginWord);
+        
         int result =0;
 
         while(!q.isEmpty()){
@@ -41,10 +40,18 @@ class Solution {
             for(int i=0;i<l;i++){
                 String s = q.poll();
                 if(s.equals(endWord)) return result+1;
-                for(String s1: map.get(s)){
-                    if(set.contains(s1)){
-                        q.offer(s1);
-                        set.remove(s1);
+                for(int j=0;j<len;j++){
+                    String pat = s.substring(0,j)+'*'+s.substring(j+1);
+                    if(map.containsKey(pat)){
+                        for(String s1: map.get(pat)){
+                            if(set.contains(s1)){
+                                 q.offer(s1);
+                                set.remove(s1);
+                            }
+                           
+                        }
+                        
+                        
                     }
                 }
             }
