@@ -1,30 +1,41 @@
 class Trie {
 
-    Set<String> set;
-    Set<String> full;
+    class TrieNode{
+        Map<Character, TrieNode> children = new HashMap<>();
+        boolean isWord = false;
+    }
+
+    TrieNode root;
+
     public Trie() {
-        set = new HashSet<>();
-        full = new HashSet<>();
+        root = new TrieNode();
     }
     
     public void insert(String word) {
-        char[] chars = word.toCharArray();
-        String s = "";
-        for(int i=0;i<chars.length;i++){
-            s +=  chars[i];
-            set.add(s);
+        TrieNode node = root;
+        for(char ch: word.toCharArray()){
+            node = node.children.computeIfAbsent(ch, k -> new TrieNode());
         }
-        full.add(word);
+        node.isWord = true;
     }
     
     public boolean search(String word) {
-        if(full.contains(word)) return true;
-        return false;
+        TrieNode node = root;
+        for(char ch: word.toCharArray()){
+            node = node.children.get(ch);
+            if(node==null) return false;
+        }
+        return node.isWord;
+         
     }
     
     public boolean startsWith(String prefix) {
-        if(set.contains(prefix)) return true;
-        return false;
+         TrieNode node = root;
+        for(char ch: prefix.toCharArray()){
+            node = node.children.get(ch);
+            if(node==null) return false;
+        }
+        return true;
     }
 }
 
