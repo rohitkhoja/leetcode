@@ -4,7 +4,7 @@ class Solution {
         Map<Character, TrieNode> children = new HashMap<>();
         boolean isWord = false;
     }
-    boolean[][] v;
+  
     TrieNode root;
     int n;
     int m;
@@ -13,7 +13,7 @@ class Solution {
     public List<String> findWords(char[][] board, String[] words) {
         n = board.length;
         m = board[0].length;
-        v = new boolean[n][m];
+         
         root = new TrieNode();
         for(String word: words){
            TrieNode node = root;
@@ -38,17 +38,17 @@ class Solution {
 
     public void search( String word, char[][] board,int i, int j, TrieNode node, Set<String> result ){
             if(node.isWord) result.add(word);
-            
-            v[i][j] = true;
+            char temp = board[i][j];
+            board[i][j] = '!';
             for(int k=0;k<4;k++){
                 int x1 = x[k]+i;
                 int y1 = y[k]+j;
                 if(x1>=0 && x1<n && y1>=0 && y1<m && node.children.containsKey(board[x1][y1])
-                    && !v[x1][y1]){
+                   ){
                     char ch = board[x1][y1];
                     search( word+ch, board,x1, y1, node.children.get(ch), result);
                 }
             }
-             v[i][j] = false;
+            board[i][j] = temp;
     }
 }
