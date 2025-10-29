@@ -1,64 +1,54 @@
-class TrieNode {
-    Map<Character, TrieNode> children;
-    boolean isWord;
+class Solution {
 
-    public TrieNode() {
-        children = new HashMap<>();
-        isWord = false;
+    public class TrieNode{
+        Map<Character, TrieNode> children = new HashMap<>();
+        boolean isWord = false;
     }
-
-    public void addWord(String word) {
-        TrieNode cur = this;
-        for (char c : word.toCharArray()) {
-            cur.children.putIfAbsent(c, new TrieNode());
-            cur = cur.children.get(c);
-        }
-        cur.isWord = true;
-    }
-}
-
-public class Solution {
-    private Set<String> res;
-    private boolean[][] visit;
-
+    boolean[][] v;
+    TrieNode root;
+    int n;
+    int m;
+    int[] x = {1,-1,0,0};
+    int[] y = {0,0,1,-1};
     public List<String> findWords(char[][] board, String[] words) {
-        TrieNode root = new TrieNode();
-        for (String word : words) {
-            root.addWord(word);
-        }
-
-        int ROWS = board.length, COLS = board[0].length;
-        res = new HashSet<>();
-        visit = new boolean[ROWS][COLS];
-
-        for (int r = 0; r < ROWS; r++) {
-            for (int c = 0; c < COLS; c++) {
-                dfs(board, r, c, root, "");
+        n = board.length;
+        m = board[0].length;
+        v = new boolean[n][m];
+        root = new TrieNode();
+        for(String word: words){
+           TrieNode node = root;
+           for(char ch: word.toCharArray()){
+                node = node.children.computeIfAbsent(ch, k-> new TrieNode());
             }
+            node.isWord = true;
         }
-        return new ArrayList<>(res);
+                
+        Set<String> result = new HashSet<>();
+        for(int i=0;i<n;i++)
+            for(int j=0;j<m;j++){
+                if(root.children.containsKey(board[i][j])){
+                    
+                    char ch = board[i][j];
+                    search( ""+ch, board, i,j, root.children.get(ch), result);
+                }
+            }
+
+        return new ArrayList<>(result);        
     }
 
-    private void dfs(char[][] board, int r, int c, TrieNode node, String word) {
-        int ROWS = board.length, COLS = board[0].length;
-        if (r < 0 || c < 0 || r >= ROWS ||
-            c >= COLS || visit[r][c] ||
-            !node.children.containsKey(board[r][c])) {
-            return;
-        }
-
-        visit[r][c] = true;
-        node = node.children.get(board[r][c]);
-        word += board[r][c];
-        if (node.isWord) {
-            res.add(word);
-        }
-
-        dfs(board, r + 1, c, node, word);
-        dfs(board, r - 1, c, node, word);
-        dfs(board, r, c + 1, node, word);
-        dfs(board, r, c - 1, node, word);
-
-        visit[r][c] = false;
+    public void search( String word, char[][] board,int i, int j, TrieNode node, Set<String> result ){
+            if(node.isWord) result.add(word);
+            
+            v[i][j] = true;
+            for(int k=0;k<4;k++){
+                int x1 = x[k]+i;
+                int y1 = y[k]+j;
+                if(x1>=0 && x1<n && y1>=0 && y1<m && node.children.containsKey(board[x1][y1])
+                    && !v[x1][y1]){
+                    char ch = board[x1][y1];
+                    search( word+ch, board,x1, y1, node.children.get(ch), result);
+                }
+            }
+             v[i][j] = false;
     }
 }
