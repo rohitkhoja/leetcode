@@ -23,15 +23,15 @@ class Solution {
                 col.add(i);
                 posDiag.add(i-index);
                 negDiag.add(i+index);
-                String s = "";
+                StringBuilder s = new StringBuilder();
                 int n = i;
                 while(n>0){
-                    s += ".";
+                    s.append(".");
                     n--;
                 }
-                s += "Q";
-                while(s.length()<N) s += ".";
-                list.add(s);
+                s.append("Q");
+                while(s.length()<N) s.append(".");
+                list.add(s.toString());
                 search(col, posDiag, negDiag, index+1);
                 list.remove(list.size()-1);
                 col.remove(i);
