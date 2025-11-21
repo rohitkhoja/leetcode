@@ -9,7 +9,7 @@ class Solution {
         }
 
         long mid = (start+end)/2;
-        System.out.println(mid);
+        //System.out.println(mid);
         if(target== (long) mid*mid) return mid;
         if(target > (long) (mid*mid) && target < (long) (mid+1)*(mid+1)) return mid;
         if(target > (long) (mid*mid)) return binarySearch(mid+1, end, target);
