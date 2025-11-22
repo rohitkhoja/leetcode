@@ -4,11 +4,7 @@ class Solution {
        List<Integer> list  = new ArrayList<>();
 
         while(n>0){
-            int temp = 0;
-
-            temp = n & 1;
-            list.add(temp);
-
+            list.add(n & 1);
             n >>>= 1;
         }
         int sum=0;
@@ -17,7 +13,6 @@ class Solution {
         while(i<j){
             if(list.get(i)!=list.get(j))
                 sum+=2;
-
             i++;
             j--;
         }
