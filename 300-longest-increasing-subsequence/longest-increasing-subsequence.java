@@ -14,7 +14,7 @@ class Solution {
         int n = nums.length;
         PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> Integer.compare(b.num, a.num));
         pq.add(new Pair(nums[n-1], 1));
-        int result = 0;
+        int result = 1;
         for(int i=n-2;i>=0;i--){
             List<Pair> list = new ArrayList<>();
 
@@ -22,6 +22,7 @@ class Solution {
             while(!pq.isEmpty() && pq.peek().num>nums[i]){
                 Pair p = pq.poll();
                 count = Math.max(count, p.count+1);
+                result = Math.max(result, count);
                 list.add(p);
             }
             //System.out.println(nums[i]+" .."+count);
@@ -29,10 +30,7 @@ class Solution {
             for(Pair p: list)
                 pq.add(p);
         }
-        while(!pq.isEmpty()){
-            Pair p = pq.poll();
-            result = Math.max(result, p.count);
-        }
+        
         return result;
     }
 }
