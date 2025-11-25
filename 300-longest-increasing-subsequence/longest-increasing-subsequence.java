@@ -12,23 +12,17 @@ class Solution {
 
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> Integer.compare(b.num, a.num));
-        pq.add(new Pair(nums[n-1], 1));
+        int[] counts = new int[n];
+        
         int result = 1;
-        for(int i=n-2;i>=0;i--){
-            List<Pair> list = new ArrayList<>();
-
+        for(int i=n-1;i>=0;i--){
             int count = 1;
-            while(!pq.isEmpty() && pq.peek().num>nums[i]){
-                Pair p = pq.poll();
-                count = Math.max(count, p.count+1);
-                result = Math.max(result, count);
-                list.add(p);
+            for(int j=i+1; j<n; j++){
+                if(nums[j]>nums[i])
+                    count = Math.max(count,counts[j]+1);
             }
-            //System.out.println(nums[i]+" .."+count);
-            pq.add(new Pair(nums[i], count));
-            for(Pair p: list)
-                pq.add(p);
+            counts[i] = count;
+            result = Math.max(result, count);
         }
         
         return result;
