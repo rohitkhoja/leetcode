@@ -12,10 +12,8 @@ class Solution {
 
         for(int i=1;i<m;i++){
             for(int j=1;j<n;j++){
-                int num = 0;
-                num += Math.min(grid[i-1][j], grid[i][j-1]);
-
-                grid[i][j] += num;
+                
+                grid[i][j] += Math.min(grid[i-1][j], grid[i][j-1]);
 
             }
         }
