@@ -31,9 +31,7 @@ class Solution {
                     }
                 }
             }
-            for(int[] r: newRotten){
-                rotten.add(r);
-            }
+            rotten = newRotten;
             if(i==fresh.size()) return -1;
             minutes++;
         }
