@@ -12,7 +12,7 @@ class Solution {
                 int size = word.length();
                 if(i+size<=n && s.substring(i,i+size).equals(word) && isPossible[i+size]){
                     isPossible[i] = true;
-                    break;
+                    //break;
                 }
             }
         }
