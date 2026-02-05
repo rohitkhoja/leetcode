@@ -9,7 +9,7 @@ class Solution {
                 result[i] = nums[(i+nums[i])%n];
             }
             else if(nums[i]<0){
-                result[i] = nums[(i+Math.abs(n+res))%n];
+                result[i] = nums[(i+n+res)%n];
             }
             else result[i] = nums[i];
 
