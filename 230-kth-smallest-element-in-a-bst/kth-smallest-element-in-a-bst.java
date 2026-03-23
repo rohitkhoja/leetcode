@@ -14,6 +14,7 @@
  * }
  */
 class Solution {
+
     int k;
     int value;
     public int kthSmallest(TreeNode root, int k) {
@@ -21,19 +22,19 @@ class Solution {
         this.value = 0;
         inorder(root);
         return value;
+
         
     }
 
     public boolean inorder(TreeNode root){
         if(root==null) return false;
         if(inorder(root.left)) return true;
-        if(k==1) {
+        if(k==1){
             value = root.val;
             return true;
         }
         k--;
         if(inorder(root.right)) return true;
         return false;
-
     }
 }
