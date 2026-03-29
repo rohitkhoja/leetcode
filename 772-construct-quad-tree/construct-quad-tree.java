@@ -40,31 +40,25 @@ class Node {
 
 class Solution {
     public Node construct(int[][] grid) {
-        return search(grid, 0, 0, grid.length-1, grid[0].length-1);
+        int n = grid.length;
+        return constructQuadTree(grid, 0, n-1, 0, n-1);
     }
 
-    public Node search(int[][] grid, int i, int j, int m, int n){
-        if(m==i) return new Node(grid[i][j]==1 ? true : false, true);
-        System.out.println(i+".."+m);
-        System.out.println(j+".."+n);
-        Node node1 = search(grid, i, j, (i+m)/2, (j+n)/2 );
-        Node node2 = search(grid, i, (j+n)/2+1, (i+m)/2, n);
-        Node node3 = search(grid, (i+m)/2+1, j, m, (j+n)/2);
-        Node node4 = search(grid, (i+m)/2+1, (j+n)/2+1, m, n);
-       
-        if(node1.val && node2.val && node3.val && node4.val
-                && node1.isLeaf && node2.isLeaf && node3.isLeaf && node4.isLeaf){
-            //System.out.println(node1.val);
-            return new Node(true, true);
-        }
-        else if(!node1.val && !node2.val && !node3.val && !node4.val
-                && node1.isLeaf && node2.isLeaf && node3.isLeaf && node4.isLeaf){
-             //System.out.println(node1.val);
-            return new Node(false, true);
-        }
-        else {
-            //System.out.println("diff");
-            return new Node(true, false, node1, node2, node3, node4);
-        }
+    public Node constructQuadTree(int[][] grid, int m, int m1, int n, int n1) {
+
+        if(m==m1 && n==n1) return new Node(grid[m][n]==1,true);
+        Node tl = constructQuadTree(grid, m, (m1+m)/2, n, (n1+n)/2);
+        Node bl = constructQuadTree(grid, (m1+m)/2+1, m1, n, (n1+n)/2);
+        Node tr = constructQuadTree(grid, m, (m1+m)/2, (n1+n)/2+1, n1);
+        Node br = constructQuadTree(grid, (m1+m)/2+1, m1, (n1+n)/2+1, n1);
+
+        if(tl.isLeaf && tr.isLeaf && bl.isLeaf && br.isLeaf 
+            && tl.val==tr.val && tl.val==bl.val && tl.val==br.val)
+            return new Node(tl.val,true);
+
+        else return new Node(true, false, tl, tr, bl, br);
+        
     }
+
+    
 }
