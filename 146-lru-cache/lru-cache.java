@@ -1,85 +1,72 @@
-class ListNode {
-    int val;
-    int key;
-    ListNode front;
-    ListNode back;
-    public ListNode(){}
-    public ListNode(int val, int key){this.val = val;this.key = key;}
-}
 class LRUCache {
-    private Map<Integer, ListNode> map;
-    private int size;
-    ListNode tail = null;
-    ListNode head = null;
+
+    int capacity;
+    Node head;
+    Node tail;
+
+
+    class Node{
+        int value;
+        int key;
+        Node prev;
+        Node next;
+
+        public Node(int value, int key, Node prev, Node next){
+            this.value = value;
+            this.key  = key;
+            this.prev = prev;
+            this.next = next;
+        }
+    }
+
+
+    Map<Integer, Node> map;
 
     public LRUCache(int capacity) {
-        map = new HashMap<>();
-        size = capacity;
-        
+        this.capacity = capacity;
+        this.map = new HashMap<>();
+        this.head = new Node(0, 0, null, null);
+        this.tail = new Node(0, 0, null, null);
+        head.prev = tail;
+        tail.next = head;
     }
     
     public int get(int key) {
+
         if(!map.containsKey(key)) return -1;
-        ListNode node = map.get(key);
-        if(node == head) return head.val;
-        node.front.back = node.back;
-        if(node!=tail)
-            node.back.front = node.front;
-        else
-            tail = node.front;
-        head.front = node;
-        node.back = head;
-        node.front = null;
-        head = node;
-        return head.val;
-        
+        Node node = map.get(key);
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
+        node.prev = head.prev;
+        head.prev.next = node;
+        node.next = head;
+        head.prev = node;
+        return node.value;
+
     }
     
     public void put(int key, int value) {
-        
-        
-        if(map.containsKey(key)){
-            ListNode node = map.get(key);
-            node.val = value;
-            if(node!=head) {
-                node.front.back = node.back;
-                if(node!=tail)
-                node.back.front = node.front;
-                else
-                tail = node.front;
-                head.front = node;
-                node.back = head;
-                node.front = null;
-                head = node;
-            }
-            
-        }
-        else {
-            if(map.size()==size ){
-                ListNode node =  map.get(tail.key);
-                ListNode temp = node.front;
-                node.front = null;
-                if(temp!=null)
-                temp.back = null;
-                map.remove(tail.key);
-                tail = temp;
-            }
-            ListNode temp =  new ListNode(value,key);
-            if(tail==null){
-                tail = temp;
-                head = tail;
-            }
-            else{
-                head.front = temp;
-                temp.back = head;
-                head = temp;
-            }
-        }
-            
-
-        map.put(key,head);
-        
+        //System.out.println(key);
+        if(map.containsKey(key)) removeNode(map.get(key));
+        if(map.size()==capacity) removeNode(tail.next);
+        Node node = new Node(value, key, null, null);
+        node.prev = head.prev;
+        head.prev.next = node;
+        node.next = head;
+        head.prev = node;
+        map.put(key, node);
     }
+
+
+
+    public void removeNode(Node node){
+        int key = node.key;
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
+        map.remove(key);
+    }
+
+    
 }
 
 /**
