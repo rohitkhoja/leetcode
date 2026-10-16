@@ -1,18 +1,23 @@
 class Solution {
     public int jump(int[] nums) {
-        int[] result = new int[nums.length];
 
-        for(int i=0;i<nums.length;i++){
-            result[i] = Integer.MAX_VALUE;
-        }
-        result[0] = 0;
-        for(int i=0;i<nums.length;i++){
-            int n = nums[i];
-            for(int j=i+1;j<=n+i && j<nums.length;j++){
-                result[j] = Math.min(result[j], result[i]+1);
+        int l = nums.length;
+
+        int[] jumps = new int[l];
+        jumps[l-1] = 0;
+        for(int i=l-2;i>=0;i--){
+            int min = 10000;
+
+            for(int j=i+1;j<i+nums[i]+1 && j<l;j++){
+                min = Math.min(jumps[j],min);
             }
+            jumps[i] = min+1;
+            System.out.println(jumps[i]);
         }
 
-        return result[nums.length-1];
+        return jumps[0];
+
+        
+        
     }
 }
